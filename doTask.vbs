@@ -11,7 +11,13 @@ if argc = 1 then
 	Set ts=CreateObject("Schedule.Service")
 	ts.Connect
 	Set TaskFolder=ts.GetFolder("\snows")
+	On Error Resume Next
 	Set RegisteredTask=TaskFolder.GetTask("UACスルー")
+	if Err.Number <> 0 then
+		MsgBox "アカウント自身が権限を有していません" & vbCrLf & vbCrLf & "エラー:" & vbCrLf & Err.Description, vbCritical
+		WScript.Quit
+	end if
+	On Error GoTo 0
 	RegisteredTask.Run """" & Wscript.Arguments(0) & """"
 elseif argc = 2 then
 	arg = Wscript.Arguments(0)

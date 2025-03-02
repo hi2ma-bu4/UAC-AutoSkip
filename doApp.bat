@@ -3,6 +3,7 @@ setlocal enabledelayedexpansion
 Set nowPath=%~dp0
 Set doTask=doTask.vbs
 Set doApp=doApp.bat
+Set userTxt=current_user.txt
 Set folderName=ショートカット群
 
 cd "%nowPath%"
@@ -26,6 +27,7 @@ if not "%~1"=="" (
 			exit
 		)
 	) else (
+		echo. user: %USERNAME%
 		schtasks /create /tn "snows\UACスルー" /tr "'%nowPath%%doApp%' $(Arg0) 1" /sc onevent /ec System /rl highest /F
 
 		pause
